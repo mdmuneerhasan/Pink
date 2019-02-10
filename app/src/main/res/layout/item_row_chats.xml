@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+>
+	
+	<de.hdodenhof.circleimageview.CircleImageView
+			android:id="@+id/imageViewCircle"
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+	/>
+	<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="name"
+			android:textSize="@dimen/text_size"
+			android:textColor="@color/black"
+			android:layout_marginLeft="16dp"
+			android:layout_toEndOf="@id/imageViewCircle"
+			android:layout_toRightOf="@id/imageViewCircle"
+			android:id="@+id/tvName"
+			android:textStyle="bold"
+	/>
+	<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="info"
+			android:layout_below="@id/tvName"
+			android:layout_toEndOf="@id/imageViewCircle"
+			android:layout_toRightOf="@id/imageViewCircle"
+			android:layout_marginLeft="16dp"
+			android:id="@+id/tvInfo"
+	/>
+	
+	<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="time"
+			android:layout_marginRight="16dp"
+			android:layout_alignParentRight="true"
+			android:id="@+id/tvTime"
+	/>
+	<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="number"
+			android:layout_alignParentRight="true"
+			android:layout_below="@id/tvTime"
+			android:textSize="16dp"
+			android:background="@color/green"
+			android:layout_marginRight="16dp"
+			android:id="@+id/tvNumber"
+			
+	/>
+	<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="connect"
+			android:layout_alignParentRight="true"
+			android:layout_below="@id/tvTime"
+			android:textSize="16dp"
+			android:layout_marginRight="16dp"
+			android:id="@+id/btnConnect"
+	/>
+	
+	<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginTop="50sp"
+			android:layout_marginLeft="64dp"
+			android:background="#eeeeee"
+	/>
+</RelativeLayout>

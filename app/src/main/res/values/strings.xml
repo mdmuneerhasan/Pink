@@ -1,0 +1,4 @@
+<resources>
+	<string name="app_name">Pink</string>
+	<string name="profile_warning">This is not your username or pin. This name will be visible to your whatsapp contacts</string>
+	</resources>
