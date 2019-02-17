@@ -4,16 +4,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class UserInfo {
-    String name,email,photo,uid,number;
+    String name,email,photo,uid,number,info;
     Context context;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     public  final String NULL_VALUES="";
-
     public UserInfo( Context context) {
         this.context = context;
         sharedPreferences =context.getSharedPreferences("userinfo",Context.MODE_PRIVATE);
         editor=sharedPreferences.edit();
+        this.name = sharedPreferences.getString("name","name");
+        this.info = sharedPreferences.getString("info","about");
         this.name = sharedPreferences.getString("name","name");
         this.email = sharedPreferences.getString("email","email");
         this.photo = sharedPreferences.getString("photo","https://english.cdn.zeenews.com/sites/default/files/2016/12/23/557234-srk.jpg");
@@ -75,5 +76,23 @@ public class UserInfo {
             editor.apply();
             this.number = number;
         }
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        if (info.length() > 0) {
+            editor.putString("info", info);
+            editor.apply();
+            this.info = info;
+        }
+    }
+    public void fetch(){
+
+    }
+    public void set(){
+
     }
 }

@@ -52,12 +52,13 @@ public class CreateGroup extends AppCompatActivity {
                     editTextPassword2.setError("Password not matching");
                     return;
                 }
-                User user=new User(userInfo.getName(),userInfo.getEmail(),userInfo.getPhoto(),userInfo.getUid(),userInfo.getNumber());
-                databaseReferencesocket.child(groupName+"ms"+password1).child("admins").setValue(user);
-                databaseReferencesocket.child(groupName+"ms"+password1).child("users").setValue(user);
-                databaseReferencerecentChats.child(userInfo.getName()).push().setValue(groupName+"ms"+password1);
+
+                databaseReferencesocket.child(groupName+"ms"+password1).child("admins").child(userInfo.getUid()).setValue(userInfo.getUid());
+                databaseReferencesocket.child(groupName+"ms"+password1).child("users").child(userInfo.getUid()).setValue(userInfo.getUid());
+                databaseReferencerecentChats.child(userInfo.getUid()).child(groupName+"ms"+password1).setValue(groupName);
                 Toast.makeText(getBaseContext(),"Group created successfully",Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 }

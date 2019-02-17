@@ -1,18 +1,8 @@
 package com.example.pink.firebase_classes;
 
 public class User {
-    String name,email,photo,uid,number;
+    String name,email,photo,uid,number,about;
 
-    public User() {
-    }
-
-    public User(String name, String email, String photo, String uid, String number) {
-        this.name = name;
-        this.email = email;
-        this.photo = photo;
-        this.uid = uid;
-        this.number = number;
-    }
 
     public String getName() {
         return name;
@@ -52,5 +42,25 @@ public class User {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public User() {
+    }
+
+    public User(String name, String email, String photo, String uid, String number, String about) {
+        this.name = name;
+        this.email = email;
+        this.photo = photo;
+        this.uid = uid;
+        this.number = number;
+        this.about = about;
     }
 }

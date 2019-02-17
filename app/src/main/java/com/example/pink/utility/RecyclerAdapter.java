@@ -1,6 +1,7 @@
 package com.example.pink.utility;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import com.example.pink.ChatActivity;
 import com.example.pink.R;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -37,7 +39,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Holder holder, int i) {
+    public void onBindViewHolder(@NonNull final Holder holder, int i) {
         Item item=list.get(i);
         holder.tvName.setText(item.getName());
         holder.tvInfo.setText(item.getInfo());
@@ -55,6 +57,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
                 holder.tvNumber.setVisibility(View.GONE);
             }
             holder.btnConnect.setVisibility(View.GONE);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(context, ChatActivity.class);
+                    intent.putExtra("uid",list.get(holder.getAdapterPosition()).getUid());
+                    context.startActivity(intent);
+                }
+            });
         }
         if(className.equals(PEOPLE)){
             holder.tvTime.setVisibility(View.GONE);

@@ -4,9 +4,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Connection {
-    DatabaseReference socket;
     FirebaseDatabase database;
+    DatabaseReference socket;
     DatabaseReference recentChats;
+    DatabaseReference user;
+    DatabaseReference message;
 
     public Connection() {
         database = FirebaseDatabase.getInstance();
@@ -20,5 +22,15 @@ public class Connection {
     public DatabaseReference getRecentChats() {
         recentChats=database.getReference("recentChats");
         return recentChats;
+    }
+
+    public DatabaseReference getUser() {
+        user=database.getReference("user");
+        return user;
+    }
+
+    public DatabaseReference getMessage() {
+        message=database.getReference("message");
+        return message;
     }
 }

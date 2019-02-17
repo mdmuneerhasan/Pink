@@ -1,7 +1,19 @@
 package com.example.pink.utility;
 
 public class Item {
-    String photo,name,info,time,number;
+    String photo,name,info,time,number,uid;
+
+    public Item() {
+    }
+
+    public Item(String photo, String name, String info, String time, String number, String uid) {
+        this.photo = photo;
+        this.name = name;
+        this.info = info;
+        this.time = time;
+        this.number = number;
+        this.uid = uid;
+    }
 
     public String getPhoto() {
         return photo;
@@ -43,14 +55,11 @@ public class Item {
         this.number = number;
     }
 
-    public Item() {
+    public String getUid() {
+        return uid;
     }
 
-    public Item(String photo, String name, String info, String time, String number) {
-        this.photo = photo;
-        this.name = name;
-        this.info = info;
-        this.time = time;
-        this.number = number;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }
