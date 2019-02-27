@@ -1,4 +1,4 @@
-package com.example.pink.utility;
+package com.example.pink.firebase_classes;
 
 public class Item {
     String photo,name,info,time,number,uid;

@@ -6,7 +6,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:background="@drawable/whatsapp"
-		tools:context=".ChatActivity">
+		tools:context=".GroupChatActivity">
 	<android.support.v7.widget.Toolbar android:layout_width="match_parent"
 	                                   android:layout_height="wrap_content"
 	                                   android:id="@+id/toolbar"
@@ -43,7 +43,14 @@
 					android:layout_marginLeft="16dp"
 					android:id="@+id/tvInfo"
 			/>
-		
+			<ImageButton
+					android:layout_width="16dp"
+					android:layout_height="16dp"
+					android:src="@drawable/ic_screen_share_black_24dp"
+					android:id="@+id/share"
+					android:layout_alignParentRight="true"
+					android:layout_margin="16dp"
+			/>
 		</RelativeLayout>
 	</android.support.v7.widget.Toolbar>
 	<android.support.v7.widget.RecyclerView

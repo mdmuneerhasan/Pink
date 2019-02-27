@@ -10,25 +10,36 @@
 			android:label="@string/app_name"
 			android:roundIcon="@mipmap/ic_launcher_round"
 			android:supportsRtl="true"
-			android:theme="@style/AppTheme">
+			android:theme="@style/AppTheme"
+			android:name=".Pink"
+	>
 		<activity android:name=".SigninActivity">
 		</activity>
 		<activity android:name=".ProfileActivity">
 		</activity>
 		<activity android:name=".CreateGroup">
 		</activity>
-		<activity android:name=".ChatActivity"
+		<activity android:name=".GroupChatActivity"
 		          android:theme="@style/Theme.AppCompat.Light.NoActionBar"
 		>
+			<intent-filter>
+				<action android:name="pink"/>
+				<action android:name="android.intent.action.MAIN"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+				<category android:name="android.intent.category.BROWSABLE"/>
+				<action android:name="android.intent.action.VIEW"/>
+				<data android:scheme="https"/>
+			</intent-filter>
 		</activity>
 		<activity android:name=".MainActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<action android:name="android.intent.action.VIEW"/>
-				
 				<category android:name="android.intent.category.LAUNCHER"/>
+
 			</intent-filter>
 		</activity>
 	</application>
 
 </manifest>
+

@@ -10,12 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.pink.R;
-import com.example.pink.utility.Item;
+import com.example.pink.interface_package.Click;
+import com.example.pink.firebase_classes.Item;
 import com.example.pink.utility.RecyclerAdapter;
 
 import java.util.ArrayList;
 
-public class People extends Fragment {
+public class People extends Fragment implements Click {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,9 +40,14 @@ public class People extends Fragment {
 
 
 
-        recyclerAdapter=new RecyclerAdapter(list,"2");
+        recyclerAdapter=new RecyclerAdapter(list,"2",this);
         recyclerView.setAdapter(recyclerAdapter);
 
+
+    }
+
+    @Override
+    public void click(String uid) {
 
     }
 }

@@ -1,17 +1,23 @@
 package com.example.pink;
 
-import android.os.Bundle;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import com.example.pink.firebase_classes.Chat;
+import android.widget.Toast;
+import com.example.pink.firebase_classes.*;
 import com.example.pink.utility.ChatRecyclerAdapter;
 import com.example.pink.utility.Connection;
 import com.example.pink.firebase_classes.Item;
@@ -23,11 +29,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ChatActivity extends AppCompatActivity {
+public class GroupChatActivity extends AppCompatActivity {
     FloatingActionButton btnSend;
     EditText edtMessage;
     String uid;
@@ -41,8 +49,10 @@ public class ChatActivity extends AppCompatActivity {
     CircleImageView imageView;
     TextView tvName, tvInfo;
     DatabaseReference socket;
-
-
+    Item item;
+    String[] string;
+    int check=5;
+    ImageButton share;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +65,7 @@ public class ChatActivity extends AppCompatActivity {
         btnSend = findViewById(R.id.btnSend);
         edtMessage = findViewById(R.id.edtMessage);
         recyclerView = findViewById(R.id.recyclerView);
-        uid = getIntent().getStringExtra("uid");
+        share=findViewById(R.id.share);
         connection = new Connection();
         userInfo = new UserInfo(this);
         arrayList = new ArrayList<>();
@@ -68,11 +78,13 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(chatRecyclerAdapter);
 
+        // hold intent
+        intentHolder();
 
         socket.child(uid).child("info").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Item item=dataSnapshot.getValue(Item.class);
+                item=dataSnapshot.getValue(Item.class);
                 Picasso.get().load(item.getPhoto()).into(imageView);
                 tvName.setText(item.getName());
                 tvInfo.setText(item.getInfo());
@@ -96,6 +108,7 @@ public class ChatActivity extends AppCompatActivity {
                     Chat chat = new Chat(text, "typing...", userInfo.getName(), userInfo.getUid());
                     databaseReference.child(uid).child(userInfo.getUid()).setValue(chat);
                     linearLayoutManager.scrollToPosition(arrayList.size());
+
                 }
             }
 
@@ -106,6 +119,18 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                String string[]=item.getUid().split("ms");
+                String message="join my group on pink https://pink."+string[0]+"/"+string[1];
+                intent.putExtra(Intent.EXTRA_TEXT,message);
+                intent.setPackage("com.whatsapp");
+                startActivity(intent);
+            }
+        });
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,15 +149,35 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    private void intentHolder() {
+        try{
+            uid = getIntent().getStringExtra("uid");
+            if(uid==null){
+
+                Intent intent = getIntent();
+                Uri uri = intent.getData();
+                try {
+                uid=uri.toString().substring(13);
+                    check=1;
+                    string = uid.split("/");
+                    uid=string[0]+"ms"+string[1];
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }catch (Exception e){
+            Toast.makeText(getBaseContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
     @Override
     protected void onStart() {
         super.onStart();
         DatabaseReference connectionMessage = connection.getMessage();
-        connectionMessage.child(uid).addValueEventListener(new ValueEventListener() {
+        connectionMessage.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 arrayList.clear();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.child(uid).getChildren()) {
                     Chat chat = dataSnapshot1.getValue(Chat.class);
                     arrayList.add(chat);
                 }
@@ -145,13 +190,24 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-
     }
-
     @Override
     protected void onStop() {
         super.onStop();
         databaseReference = connection.getMessage();
         databaseReference.child(uid).child(userInfo.getUid()).removeValue();
+                if(check==1){
+                    connection.getRecentChats().child(userInfo.getUid()).child(string[0] + "ms" + string[1]).setValue(item);
+                    item=new Item(userInfo.getPhoto(),userInfo.getName(),userInfo.getInfo(),"",userInfo.getNumber(),userInfo.getUid());
+                    connection.getSocketReference().child(string[0] + "ms" + string[1]).child("users").child(userInfo.getUid())
+                            .setValue(item);
+                }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent=new Intent(getBaseContext(),MainActivity.class);
+        startActivity(intent);
     }
 }
